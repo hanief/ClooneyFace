@@ -50,6 +50,16 @@ final class FaceObserved {
         }
     }
     
+    var clooneyConfidence = 0.5 {
+        didSet {
+            DispatchQueue.main.async {
+                self.delegate?.didLoadClooney()
+            }
+        }
+    }
+    
+    var lastPerson: Person?
+    
     var persons: [Person] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -73,5 +83,6 @@ protocol FaceObservedDelegate: class {
     func didUpdatePreviewImage()
     func didStartLoading()
     func didStopLoading()
+    func didLoadClooney()
 }
 

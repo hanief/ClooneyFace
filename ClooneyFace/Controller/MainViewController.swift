@@ -11,9 +11,13 @@ import Pulley
 
 class MainViewController: PulleyViewController {
     
+    var waterController: WaterController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        let imageView = UIImageView(image: UIImage(named: "ruminant"))
+//        waterController = WaterController(view: self.view)
+//        waterController.start()
     }
     
     override func didReceiveMemoryWarning() {

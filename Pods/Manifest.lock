@@ -2,29 +2,49 @@ PODS:
   - Alamofire (4.7.0)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
+  - CocoaImageHashing (1.5.0)
   - Pulley (2.2.8)
   - Realm (3.1.1):
     - Realm/Headers (= 3.1.1)
   - Realm/Headers (3.1.1)
   - RealmSwift (3.1.1):
     - Realm (= 3.1.1)
+  - Spring (1.0.5)
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - AlamofireImage (~> 3.3)
+  - CocoaImageHashing (from `https://github.com/ameingast/cocoaimagehashing.git`)
   - Pulley
   - RealmSwift
+  - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftyJSON
+
+EXTERNAL SOURCES:
+  CocoaImageHashing:
+    :git: https://github.com/ameingast/cocoaimagehashing.git
+  Spring:
+    :git: https://github.com/MengTo/Spring.git
+
+CHECKOUT OPTIONS:
+  CocoaImageHashing:
+    :commit: a8aaf38b6b05e9dc8d4352da87bc69c6d6914de6
+    :git: https://github.com/ameingast/cocoaimagehashing.git
+  Spring:
+    :commit: 19b04d730d3edabbb02a39e58121d1d3220690ee
+    :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  CocoaImageHashing: c52d3f8901b3d09f6347203f404d82802af1b3b6
   Pulley: 72574af3f2a52cd83fd0f1d92487038471257fec
   Realm: 42d1c38a5b1bbcc828b48a7ce702cb86fc68adf4
   RealmSwift: d31937ca6a6ee54acde64ec839523c0a3c04924b
+  Spring: 48aad470f3ead043b2da98b64e0bf0630b7ebc42
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 0aa1a65cd5a7ae78c59cb2cec739d94c15af653a
+PODFILE CHECKSUM: 1d5bdecbe61d2a7bbb56fd2aea7c7d5e07090dd0
 
 COCOAPODS: 1.4.0

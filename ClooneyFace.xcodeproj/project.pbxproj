@@ -23,6 +23,8 @@
 		7DA9BED320549F1B004CC99D /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9BED220549F1B004CC99D /* UIImage+Crop.swift */; };
 		7DA9BED52054A108004CC99D /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9BED42054A108004CC99D /* PersonTableViewCell.swift */; };
 		7DA9BED72054BC1B004CC99D /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9BED62054BC1B004CC99D /* Person.swift */; };
+		7DA9BED92054F8BA004CC99D /* ClooneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9BED82054F8BA004CC99D /* ClooneyView.swift */; };
+		7DA9BEDC20553473004CC99D /* WaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA9BEDB20553473004CC99D /* WaterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,9 @@
 		7DA9BED220549F1B004CC99D /* UIImage+Crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
 		7DA9BED42054A108004CC99D /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		7DA9BED62054BC1B004CC99D /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		7DA9BED82054F8BA004CC99D /* ClooneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClooneyView.swift; sourceTree = "<group>"; };
+		7DA9BEDA20552D47004CC99D /* ClooneyFace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClooneyFace-Bridging-Header.h"; sourceTree = "<group>"; };
+		7DA9BEDB20553473004CC99D /* WaterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				7DA9BEC320546BC7004CC99D /* Info.plist */,
+				7DA9BEDA20552D47004CC99D /* ClooneyFace-Bridging-Header.h */,
 				7DA9BEC920548B89004CC99D /* View */,
 				7DA9BEC820548B66004CC99D /* Model */,
 				7DA9BEBD205468DC004CC99D /* Controller */,
@@ -112,6 +118,7 @@
 				7DA9BEB720545BF2004CC99D /* MainViewController.swift */,
 				7DA9BEBB20546245004CC99D /* CameraViewController.swift */,
 				7DA9BEB920545D75004CC99D /* DrawerViewController.swift */,
+				7DA9BEDB20553473004CC99D /* WaterController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -144,6 +151,7 @@
 				7DA9BECA20548BA4004CC99D /* BorderView.swift */,
 				7DA9BECC20548C35004CC99D /* LayerView.swift */,
 				7DA9BED42054A108004CC99D /* PersonTableViewCell.swift */,
+				7DA9BED82054F8BA004CC99D /* ClooneyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,18 +236,22 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ClooneyFace/Pods-ClooneyFace-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaImageHashing/CocoaImageHashing.framework",
 				"${BUILT_PRODUCTS_DIR}/Pulley/Pulley.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaImageHashing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pulley.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,10 +299,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DA9BED92054F8BA004CC99D /* ClooneyView.swift in Sources */,
 				7DA9BECF20549016004CC99D /* Face.swift in Sources */,
 				7DA9BECD20548C35004CC99D /* LayerView.swift in Sources */,
 				7DA9BEB820545BF2004CC99D /* MainViewController.swift in Sources */,
 				7DA9BEBC20546245004CC99D /* CameraViewController.swift in Sources */,
+				7DA9BEDC20553473004CC99D /* WaterController.swift in Sources */,
 				7DA9BEBA20545D75004CC99D /* DrawerViewController.swift in Sources */,
 				7DA9BECB20548BA4004CC99D /* BorderView.swift in Sources */,
 				7DA9BED12054919D004CC99D /* FaceObserved.swift in Sources */,
@@ -452,6 +466,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ruminant.ClooneyFace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ClooneyFace/ClooneyFace-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -472,6 +487,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ruminant.ClooneyFace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ClooneyFace/ClooneyFace-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

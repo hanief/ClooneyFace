@@ -16,5 +16,6 @@ class Person {
     var linkedIn: String = ""
     var twitter: String = ""
     var website: String = ""
+    var clooneyStatus: Float = 0.0
     
 }

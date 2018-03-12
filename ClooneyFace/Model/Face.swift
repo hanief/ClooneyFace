@@ -7,7 +7,19 @@
 //
 
 import Foundation
+import UIKit
+import CocoaImageHashing
 
 class Face {
     
+}
+
+extension UIImage {
+    func isImageSimilar(_ image: UIImage) {
+        
+    }
+    
+    func measureDistance(_ image: UIImage) {
+        
+    }
 }

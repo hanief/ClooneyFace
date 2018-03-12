@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Spring
 
-class LayerView: UIView {
+class LayerView: SpringView {
 
     convenience init(from boundingBox: CGRect, to sceneBounds: CGRect) {
         self.init(frame: LayerView.faceFrame(from: boundingBox, to: sceneBounds))
@@ -21,5 +22,23 @@ class LayerView: UIView {
         let size = CGSize(width: boundingBox.width * sceneBounds.width, height: boundingBox.height * sceneBounds.height)
         
         return CGRect(origin: origin, size: size)
+    }
+    
+    public func bobble() {
+    
+    }
+    
+    private func animateLeft() {
+        UIView.animate(withDuration: 1.0, animations: {
+            
+        }) { (completed) in
+            if completed {
+                
+            }
+        }
+    }
+    
+    private func animateRight() {
+        
     }
 }

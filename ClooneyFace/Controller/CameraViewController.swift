@@ -13,8 +13,11 @@ import Vision
 import QuartzCore
 import Alamofire
 import SwiftyJSON
+import Pulley
 
 class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate {
+    
+    let refreshRate: TimeInterval = 1.0
     
     @IBOutlet var sceneView: ARSKView!
     
@@ -64,7 +67,7 @@ class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegat
         sceneView.session.run(configuration)
         
         //scan for faces in regular intervals
-        scanTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(scanForFaces), userInfo: nil, repeats: true)
+        scanTimer = Timer.scheduledTimer(timeInterval: refreshRate, target: self, selector: #selector(scanForFaces), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -102,7 +105,6 @@ class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegat
                     if let imageRef = context.createCGImage(image, from: CGRect(x: 0, y: 0, width: CVPixelBufferGetWidth(capturedImage), height: CVPixelBufferGetHeight(capturedImage))) {
                         let theImage = UIImage(cgImage: imageRef, scale: 1.0, orientation: .right)
                         
-//                        FaceObserved.shared.previewImage = theImage
                         self.uploadToServer(theImage)
                     }
                     
@@ -112,14 +114,20 @@ class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegat
                         //                        }
                         
                         for face in faces {
-                            let borderView = BorderView(from: face.boundingBox, to: self.sceneView.bounds)
+                            let layerView = BorderView(from: face.boundingBox, to: self.sceneView.bounds)
+                    
+                            self.sceneView.addSubview(layerView)
                             
-                            self.sceneView.addSubview(borderView)
-                            
-                            self.scannedFaceViews.append(borderView)
+                            self.scannedFaceViews.append(layerView)
                             
                         }
                     }
+                } else {
+//                    DispatchQueue.main.async {
+//                    if let drawerVC = self.parent as? PulleyViewController {
+//                        drawerVC.setDrawerPosition(position: .collapsed, animated: true)
+//                    }
+//                    }
                 }
                 
             }
@@ -163,6 +171,7 @@ class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegat
                 Alamofire.upload(
                     multipartFormData: { multipartFormData in
                         multipartFormData.append(data, withName: "image", fileName: "test.jpg", mimeType: "image/jpeg")
+                        multipartFormData.append("1".data(using: String.Encoding.utf8, allowLossyConversion: false)!, withName: "clooney")
                 },
                     to: "http://adamfield.net/hack24/",
                     encodingCompletion: { encodingResult in
@@ -171,22 +180,54 @@ class CameraViewController: UIViewController, ARSKViewDelegate, ARSessionDelegat
                             upload.responseJSON { response in
                                 if let value = response.result.value {
                                     let json = JSON(value)
-                                    print(json)
-                                    for (_, face) in json {
+                                    for (_, data) in json {
+                                        if let confidence = data["confidence"].double {
+                                            FaceObserved.shared.clooneyConfidence = confidence
+                                        } else {
+                                            FaceObserved.shared.clooneyConfidence = 0.0
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        case .failure(let encodingError):
+                            print(encodingError)
+                        }
+                        
+                        FaceObserved.shared.stopLoading()
+                }
+                )
+                
+                Alamofire.upload(
+                    multipartFormData: { multipartFormData in
+                        multipartFormData.append(data, withName: "image", fileName: "test.jpg", mimeType: "image/jpeg")
+                },
+                    to: "http://adamfield.net/hack24/",
+                    encodingCompletion: { encodingResult in
+                        switch encodingResult {
+                        case .success(let upload, _, _):
+                            upload.responseJSON { response in
+                                if let value = response.result.value {
+                                    let json = JSON(value)
+                                    for face in json["faces"].arrayValue {
                                         let metadata = face["metadata"]
                                         
-                                        let person = Person()
-                                        person.name = metadata["name"].stringValue
-                                        person.id = metadata["id"].stringValue
-                                        person.faceURL = metadata["face"].stringValue
-                                        person.website = metadata["website"].stringValue
-                                        person.twitter = metadata["twitter"].stringValue
-                                        person.linkedIn = metadata["linkedin"].stringValue
-                                        person.bio = metadata["bio"].stringValue
+                                        let newPerson = Person()
+                                        newPerson.name = metadata["name"].stringValue
+                                        newPerson.id = metadata["id"].stringValue
+                                        newPerson.faceURL = metadata["face"].stringValue
+                                        newPerson.website = metadata["website"].stringValue
+                                        newPerson.twitter = metadata["twitter"].stringValue
+                                        newPerson.linkedIn = metadata["linkedin"].stringValue
+                                        newPerson.bio = metadata["bio"].stringValue
                                         
-                                        FaceObserved.shared.persons = [person]
+                                        if FaceObserved.shared.persons.filter({ (person) -> Bool in
+                                            return person.id == newPerson.id
+                                        }).count == 0 {
+                                            FaceObserved.shared.lastPerson = FaceObserved.shared.persons.first
+                                            FaceObserved.shared.persons = [newPerson]
+                                        }
                                     }
-                                    
                                 }
                                 
                             }

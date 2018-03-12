@@ -11,4 +11,6 @@ target 'ClooneyFace' do
   pod 'RealmSwift'
   pod 'Pulley'
   pod 'SwiftyJSON'
+  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
+  pod 'CocoaImageHashing', :git => 'https://github.com/ameingast/cocoaimagehashing.git'
 end

@@ -22,6 +22,34 @@ class DrawerViewController: UIViewController {
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet var gripperTopConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var clooneyStackView: UIStackView!
+    @IBOutlet weak var clooneyImageView: UIImageView!
+    @IBOutlet weak var clooneySentence: UILabel!
+    @IBOutlet weak var clooneyPercentage: UILabel!
+    
+    var clooneyStatus: Dictionary = [
+        "success": [
+            "image": "clooney-success",
+            "sentence": "Brilliant!",
+            "percentage": 100.0
+        ],
+        "notbad": [
+            "image": "clooney-notbad",
+            "sentence": "Not bad",
+            "percentage": 75.0
+        ],
+        "isitme": [
+            "image": "clooney-me",
+            "sentence": "What else?",
+            "percentage": 50.0
+        ],
+        "failed": [
+            "image": "clooney-failed",
+            "sentence": "That's not me!",
+            "percentage": 25.0
+        ],
+    ]
+    
     // We adjust our 'header' based on the bottom safe area using this constraint
     @IBOutlet var headerSectionHeightConstraint: NSLayoutConstraint!
     
@@ -76,7 +104,7 @@ extension DrawerViewController: PulleyDrawerViewControllerDelegate {
     func collapsedDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat
     {
         // For devices with a bottom safe area, we want to make our drawer taller. Your implementation may not want to do that. In that case, disregard the bottomSafeArea value.
-        return 68.0 + bottomSafeArea
+        return 60.0 + bottomSafeArea
     }
     
     func partialRevealDrawerHeight(bottomSafeArea: CGFloat) -> CGFloat
@@ -162,9 +190,8 @@ extension DrawerViewController: UITableViewDataSource {
             cell.webURL = person.website
             cell.twitterAccount = person.twitter
             cell.linkedInAccount = person.linkedIn
-            cell.faceView.image = UIImage(named: "hanief")
+            cell.imageURL = person.faceURL
             cell.delegate = self
-//        cell.imageView?.image = FaceObserved.shared.portraits[indexPath.row]
         
             return cell
         }
@@ -176,7 +203,7 @@ extension DrawerViewController: UITableViewDataSource {
 extension DrawerViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0
+        return 150.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -190,11 +217,11 @@ extension DrawerViewController: FaceObservedDelegate {
     }
     
     func didUpdatePerson() {
+
         DispatchQueue.main.async {
             
             self.tableView.reloadData()
             
-            self.loadingLabel.text = "Person found!"
             self.loadingAnimation.stopAnimating()
             
             if let drawerVC = self.parent as? PulleyViewController
@@ -204,16 +231,48 @@ extension DrawerViewController: FaceObservedDelegate {
         }
     }
     
+    func didLoadClooney() {
+        var status = "success"
+        
+        let confidence = FaceObserved.shared.clooneyConfidence
+        
+        if confidence < 0.10 {
+            status = "failed"
+        } else if confidence < 0.20 {
+            status = "isitme"
+        } else if confidence < 0.40 {
+            status = "notbad"
+        }
+        
+        if let clooneyDic = self.clooneyStatus[status] {
+            DispatchQueue.main.async {
+                self.clooneyImageView.image = UIImage(named: clooneyDic["image"] as! String)
+                self.clooneyImageView.isHidden = false
+                self.clooneySentence.text = clooneyDic["sentence"] as! String
+                self.clooneySentence.isHidden = false
+                let percent = FaceObserved.shared.clooneyConfidence * 100
+                self.clooneyPercentage.text = "\(percent)% its Clooney"
+                
+                self.clooneyPercentage.isHidden = false
+            }
+        }
+    }
+    
+    
     func didUpdatePreviewImage() {
         self.previewImageView.image = FaceObserved.shared.previewImage
     }
     
     func didStartLoading() {
-        self.loadingAnimation.startAnimating()
+        DispatchQueue.main.async {
+            self.loadingAnimation.startAnimating()
+        }
     }
     
     func didStopLoading() {
-        self.loadingAnimation.stopAnimating()
+        DispatchQueue.main.async {
+            self.loadingAnimation.stopAnimating()
+        }
     }
 }
 
